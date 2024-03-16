@@ -9,10 +9,11 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import { Role } from '../../../common/enums/user.enum';
 import { IUser } from '../../domain/entities/IUser';
 import { Post } from './Post';
 
-@Entity({ name: 'users' })
+@Entity('users')
 export class User extends BaseEntity implements IUser {
   @PrimaryGeneratedColumn('uuid')
   public id: string;
@@ -27,6 +28,9 @@ export class User extends BaseEntity implements IUser {
 
   @Column()
   password: string;
+
+  @Column({ type: 'enum', enum: Role, nullable: true, default: Role.USER })
+  public role: Role;
 
   @BeforeInsert()
   async setPassword(password: string) {

@@ -22,6 +22,10 @@ export class migrations1710539881456 implements MigrationInterface {
             type: 'varchar',
           },
           {
+            name: 'role',
+            type: 'varchar',
+          },
+          {
             name: 'createdAt',
             type: 'timestamp',
             default: 'now()',

@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import type { IUser } from '../../database/domain/entities/IUser';
+import { IUser } from 'src/database/domain/entities/IUser';
 import type { IUserService } from '../../database/domain/services/IUser';
 import { UserRepository } from '../../database/repositories/user.repository';
 
@@ -7,19 +7,21 @@ import { UserRepository } from '../../database/repositories/user.repository';
 export class UsersService implements IUserService {
   constructor(private userRepository: UserRepository) {}
 
-  async getUser(name: string) {
-    return await this.userRepository.findByName(name);
+  getUser(name: string) {
+    return this.userRepository.findByName(name);
   }
 
-  async getUsers() {
-    return await this.userRepository.findAll();
+  getUsers() {
+    console.log('🚀 ~ UsersController ~ USER SRVIDE GETALL');
+    return this.userRepository.findAll();
   }
 
-  async getUserById(userId: string) {
-    return await this.userRepository.findById(userId);
+  getUserById(userId: string) {
+    return this.userRepository.findById(userId);
   }
 
-  async createUser(user: any): Promise<IUser> {
-    return await this.userRepository.create(user);
+  createUser(user: any): Promise<IUser> {
+    console.log('🚀 ~ UsersService ~ createUser ~ user:', user);
+    return this.userRepository.create(user);
   }
 }

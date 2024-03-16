@@ -8,11 +8,11 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { IPosts } from '../../domain/entities/IPost';
+import { IPost } from '../../domain/entities/IPost';
 import { User } from './User';
 
 @Entity({ name: 'posts' })
-export class Post extends BaseEntity implements IPosts {
+export class Post extends BaseEntity implements IPost {
   @PrimaryGeneratedColumn('uuid')
   public id: string;
 

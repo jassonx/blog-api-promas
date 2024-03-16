@@ -1,8 +1,8 @@
 import type { IUser } from '../entities/IUser';
 
 export interface IUserRepository {
-  create(data: IUser): Promise<any>;
-  findAll(): Promise<any>;
-  findById(id: string): Promise<any>;
-  findByName(name: string): Promise<any>;
+  create(data: IUser): Promise<IUser>;
+  findAll(): Promise<IUser[]>;
+  findById(id: string): Promise<IUser>;
+  findByName(name: string): Promise<IUser>;
 }

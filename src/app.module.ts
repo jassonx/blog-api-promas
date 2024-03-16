@@ -7,7 +7,6 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { DatabaseModule } from './database/database.module';
 import { PostsModule } from './modules/posts/posts.module';
 import { UsersModule } from './modules/users/users.module';
-console.log('🚀 ~ __dirname: module', __dirname);
 
 @Module({
   imports: [
@@ -16,13 +15,13 @@ console.log('🚀 ~ __dirname: module', __dirname);
     }),
     TypeOrmModule.forRoot({
       type: 'postgres',
-      host: process.env.DB_HOST,
+      host: 'localhost',
       port: 5432,
-      username: process.env.DB_USER,
-      password: process.env.DB_PASS,
-      database: process.env.DB_NAME,
+      username: 'dev_user',
+      password: 'dev_pass',
+      database: 'blog',
       synchronize: false,
-      entities: [__dirname + './database/infra/entities/*.entity.{js,ts}'],
+      entities: [__dirname + '/database/infra/entities/*.{ts}'],
     }),
     UsersModule,
     PostsModule,

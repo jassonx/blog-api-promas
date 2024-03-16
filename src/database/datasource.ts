@@ -1,10 +1,6 @@
 import { join } from 'path';
 import { DataSource } from 'typeorm';
-console.log('🚀 ~ __dirname:', __dirname + '/infra/entities');
-console.log(
-  '🚀 ~ __dirname:',
-  join(__dirname, '../database/migrations/*{.ts,.js}'),
-);
+
 export const connectionSource = new DataSource({
   type: 'postgres',
   host: 'localhost',

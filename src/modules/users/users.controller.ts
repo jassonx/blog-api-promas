@@ -10,6 +10,8 @@ export class UsersController {
 
   @Get()
   async getUsers() {
+    console.log('🚀 ~ UsersController ~ GETUSERS:');
+
     return this.userService.getUsers();
   }
 
