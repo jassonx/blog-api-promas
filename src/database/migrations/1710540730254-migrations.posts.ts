@@ -1,29 +1,32 @@
 import { MigrationInterface, QueryRunner, Table } from 'typeorm';
 
-export class migrations1710539881456 implements MigrationInterface {
+export class migrations1710540730254 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(
       new Table({
-        name: 'users',
+        name: 'posts',
         columns: [
           {
             name: 'id',
-            type: 'uuid',
+            type: 'bigint',
             isPrimary: true,
-            isUnique: true,
             isGenerated: true,
+            generationStrategy: 'increment',
           },
           {
-            name: 'name',
-            type: 'varchar',
+            name: 'userId',
+            type: 'bigint',
+            isNullable: true,
           },
           {
-            name: 'password',
+            name: 'title',
             type: 'varchar',
+            length: '150',
           },
           {
-            name: 'role',
+            name: 'content',
             type: 'varchar',
+            length: '350',
           },
           {
             name: 'createdAt',
@@ -36,11 +39,20 @@ export class migrations1710539881456 implements MigrationInterface {
             default: 'now()',
           },
         ],
+        foreignKeys: [
+          {
+            columnNames: ['userId'],
+            referencedTableName: 'users',
+            referencedColumnNames: ['id'],
+            onDelete: 'CASCADE',
+          },
+        ],
       }),
+      true,
     );
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.query('DROP TABLE users CASCADE');
+    await queryRunner.query('DROP TABLE posts CASCADE');
   }
 }

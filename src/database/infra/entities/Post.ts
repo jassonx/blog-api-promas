@@ -13,8 +13,8 @@ import { User } from './User';
 
 @Entity({ name: 'posts' })
 export class Post extends BaseEntity implements IPost {
-  @PrimaryGeneratedColumn('uuid')
-  public id: string;
+  @PrimaryGeneratedColumn()
+  public id: number;
 
   @Column({ length: 150 })
   public title: string;
@@ -23,11 +23,11 @@ export class Post extends BaseEntity implements IPost {
   public content: string;
 
   @Column()
-  public userId: string;
+  public userId: number;
 
   @ManyToOne(() => User, (user) => user.posts)
   @JoinColumn({ name: 'userId' })
-  user: User;
+  user?: User;
 
   @CreateDateColumn({ type: 'timestamptz' })
   public createdAt!: Date;

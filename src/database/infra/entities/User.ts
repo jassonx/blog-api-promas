@@ -1,7 +1,5 @@
-import * as bcrypt from 'bcrypt';
 import {
   BaseEntity,
-  BeforeInsert,
   Column,
   CreateDateColumn,
   Entity,
@@ -15,8 +13,8 @@ import { Post } from './Post';
 
 @Entity('users')
 export class User extends BaseEntity implements IUser {
-  @PrimaryGeneratedColumn('uuid')
-  public id: string;
+  @PrimaryGeneratedColumn()
+  public id: number;
 
   @Column({ length: 150 })
   public name: string;
@@ -31,12 +29,6 @@ export class User extends BaseEntity implements IUser {
 
   @Column({ type: 'enum', enum: Role, nullable: true, default: Role.USER })
   public role: Role;
-
-  @BeforeInsert()
-  async setPassword(password: string) {
-    const salt = await bcrypt.genSalt();
-    this.password = await bcrypt.hash(password || this.password, salt);
-  }
 
   @CreateDateColumn({ type: 'timestamptz' })
   public createdAt!: Date;

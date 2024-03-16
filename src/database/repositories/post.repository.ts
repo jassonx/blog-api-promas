@@ -1,8 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
-import { IPost } from '../domain/entities/IPost';
-import { IPostRepository } from '../domain/repositories/IPost';
+import { PostFilterRquest } from 'src/modules/posts/domain/dto/Requests';
+import { Brackets, Repository } from 'typeorm';
+import type { IPost } from '../domain/entities/IPost';
+import type { IPostRepository } from '../domain/repositories/IPost';
 import { Post } from '../infra';
 
 @Injectable()
@@ -13,17 +14,57 @@ export class PostRepository implements IPostRepository {
   ) {}
 
   create(data: any): Promise<IPost> {
-    console.log('🚀 ~ UserRepository ~ create ~ data:', data);
-    this.repository.create(data);
-    return null;
+    this.repository.save(data);
+    return data;
   }
 
-  findAll(): Promise<any> {
-    console.log('🚀 ~ UserRepository ~ FindAll');
-    return this.repository.find();
+  findAll(): Promise<IPost[]> {
+    return this.repository.find({
+      relations: ['user'],
+      order: {
+        id: 'DESC',
+      },
+    });
   }
 
-  filter(data: any): Promise<Post[]> {
-    return null; //this.repository.findOneBy(data);
+  async filterBy(conditions: PostFilterRquest): Promise<Post[]> {
+    console.log('🚀 ~ PostRepository ~ filter ~ conditions:', conditions);
+    const qb = this.repository
+      .createQueryBuilder('post')
+      .leftJoinAndSelect('post.user', 'user')
+      .select([
+        'post.id',
+        'post.title',
+        'post.content',
+        'post.createdAt',
+        'user.id',
+        'user.name',
+        'user.role',
+      ]);
+
+    if (conditions?.userId)
+      qb.where('post.userId = :userId', { userId: conditions.userId });
+
+    if (conditions?.title) {
+      qb.andWhere(
+        new Brackets((subQb) => {
+          subQb.where('post.title ILIKE :title', {
+            title: `%${conditions.title}%`,
+          });
+        }),
+      );
+    }
+
+    if (conditions?.content) {
+      qb.andWhere(
+        new Brackets((subQb) => {
+          subQb.where('post.content ILIKE :content', {
+            content: `%${conditions.content}%`,
+          });
+        }),
+      );
+    }
+
+    return await qb.getMany();
   }
 }

@@ -4,6 +4,7 @@ import { AppService } from './app.service';
 
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { join } from 'path';
 import { DatabaseModule } from './database/database.module';
 import { PostsModule } from './modules/posts/posts.module';
 import { UsersModule } from './modules/users/users.module';
@@ -21,7 +22,9 @@ import { UsersModule } from './modules/users/users.module';
       password: 'dev_pass',
       database: 'blog',
       synchronize: false,
-      entities: [__dirname + '/database/infra/entities/*.{ts}'],
+      entities: [__dirname + '/database/infra/entities/*{.ts,.js}'],
+      migrations: [join(__dirname, '../database/migrations/*{.ts,.js}')],
+      logging: true,
     }),
     UsersModule,
     PostsModule,

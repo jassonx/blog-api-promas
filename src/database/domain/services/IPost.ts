@@ -1,7 +1,7 @@
-import { IPost } from '../entities/IPost';
+import type { IPost } from '../entities/IPost';
 
 export interface IPostService {
-  (): Promise<any>;
   filter(data: any): Promise<IPost[]>;
+  getPosts(): Promise<IPost[]>;
   createPost(data: IPost): Promise<IPost>;
 }

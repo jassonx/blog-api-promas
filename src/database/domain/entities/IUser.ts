@@ -1,7 +1,7 @@
-import { IPost } from './IPost';
+import type { IPost } from './IPost';
 
 export interface IUser {
-  id: string;
+  id: number;
   name: string;
   role: string;
   posts?: IPost[];

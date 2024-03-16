@@ -1,8 +1,9 @@
 import type { IUser } from '../entities/IUser';
 
 export interface IUserService {
-  getUser(name: string): Promise<any>;
+  login(data: any): Promise<any>;
   getUsers(): Promise<any>;
-  getUserById(id: string): Promise<any>;
+  getUserById(id: number): Promise<any>;
   createUser(data: IUser): Promise<IUser>;
+  deleteUser(id: number): Promise<any>;
 }

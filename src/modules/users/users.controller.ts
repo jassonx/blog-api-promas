@@ -1,5 +1,13 @@
-import { Body, Controller, Get, Inject, Post } from '@nestjs/common';
-import { IUserService } from '../../database/domain/services/IUser';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Inject,
+  Param,
+  Post,
+} from '@nestjs/common';
+import type { IUserService } from '../../database/domain/services/IUser';
 
 @Controller('users')
 export class UsersController {
@@ -10,14 +18,21 @@ export class UsersController {
 
   @Get()
   async getUsers() {
-    console.log('🚀 ~ UsersController ~ GETUSERS:');
-
     return this.userService.getUsers();
   }
 
   @Post()
   async createUser(@Body() body: any) {
-    console.log('🚀 ~ UsersController ~ createUser ~ body:', body);
     return this.userService.createUser(body);
+  }
+
+  @Post('/login')
+  async login(@Body() body: any) {
+    return this.userService.login(body);
+  }
+
+  @Delete('/:id')
+  async delete(@Param('id') id: number) {
+    return this.userService.deleteUser(id);
   }
 }

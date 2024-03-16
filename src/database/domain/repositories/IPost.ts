@@ -1,7 +1,8 @@
-import { IPost } from '../entities/IPost';
+import type { PostFilterRquest } from 'src/modules/posts/domain/dto/Requests';
+import type { IPost } from '../entities/IPost';
 
 export interface IPostRepository {
   create(data: IPost): Promise<IPost>;
   findAll(): Promise<IPost[]>;
-  filter(data: any): Promise<IPost[]>;
+  filterBy(data: PostFilterRquest): Promise<IPost[]>;
 }

@@ -5,7 +5,6 @@ import {
 
 export const typeOrmAsyncConfig: TypeOrmModuleAsyncOptions = {
   useFactory: async (): Promise<TypeOrmModuleOptions> => {
-    console.log('🚀 ~ useFactory: ~ __dirname:', __dirname);
     return {
       name: 'default',
       type: 'postgres',

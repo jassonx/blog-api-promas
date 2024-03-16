@@ -1,8 +1,8 @@
-import { IUser } from './IUser';
+import type { IUser } from './IUser';
 
 export interface IPost {
-  id: string;
+  id: number;
   title: string;
   content: string;
-  user: IUser;
+  user?: IUser;
 }
